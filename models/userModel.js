@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema(
     },
     isVerified: {
       type: Boolean,
-      default: false, // ✅ Tracks if the user has verified their email via OTP
+      default: false, 
     },
     otp: {
-      type: String, // ✅ Stores OTP sent to the user's email
+      type: String, 
     },
     otpExpiry: {
-      type: Date, // ✅ Expiry time for OTP (e.g., 10 minutes validity)
+      type: Date, 
     },
     recipes: [
       {

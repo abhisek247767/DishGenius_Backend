@@ -18,6 +18,7 @@ router.post("/generate", verifyToken, async (req, res) => {
     
     const newRecipe = await Recipe.create({
       ...recipeData,
+      cuisine: cuisine || "Indian",
       createdBy: user._id
     });
 

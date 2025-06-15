@@ -2,7 +2,12 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 require("dotenv").config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", generationConfig: {
+    maxOutputTokens: 1000, 
+    temperature: 0.1,
+    topP: 0.8,
+    topK: 10
+  } });
 
 const generateRecipe = async ({ ingredients, members, cuisine, language }) => {
   const prompt = `
@@ -31,9 +36,8 @@ const generateRecipe = async ({ ingredients, members, cuisine, language }) => {
     const result = await model.generateContent(prompt);
     // console.log("Full AI Response:", result); // Log the entire response object
 
-    // Remove any markdown formatting from the response
     let jsonData = result.response.text().trim();
-    jsonData = jsonData.replace(/```json|```/g, ""); // Remove triple backticks
+    jsonData = jsonData.replace(/```json|```/g, ""); 
 
     // Parse the cleaned JSON data
     return JSON.parse(jsonData);
